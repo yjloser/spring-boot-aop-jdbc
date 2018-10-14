@@ -5,7 +5,7 @@ import com.aop.jdbc.dynamic.annotation.DataSource;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
  **/
 @Aspect
 @Component
-public class DataSourceAspect implements Ordered {
+@Order(-1)
+public class DataSourceAspect {
 
 //    @Pointcut("execution(public * com.aop.jdbc.impl..*.*(..))")
 //    public void dynamic() {
@@ -27,10 +28,5 @@ public class DataSourceAspect implements Ordered {
     @Before(value = "@annotation(dataSource)")
     public void dataSourcePoint(JoinPoint joinPoint, DataSource dataSource) {
         DynamicDataSourceHolder.putDataSource(dataSource.value());
-    }
-
-    @Override
-    public int getOrder() {
-        return -1;
     }
 }
